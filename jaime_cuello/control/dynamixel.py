@@ -11,22 +11,25 @@ from std_msgs.msg import Float64MultiArray
 class IMU():
     def __init__(self):
         self.IMU=list()
-        self.suscriber=rospy.Subscriber("gyroscope", Float64MultiArray, self.callback)
+        self.suscriber=rospy.Subscriber("gyro", Float64MultiArray, self.callback)
+        
         
     def callback(self, data):
 
         rospy.loginfo(data.data)
-        x, y ,z= data.data[0], data.data[1],data.data[2]
+        x, y ,z= 0, data.data[0], data.data[1]
         print("Received x={}, y={}".format(x, y))
-
+        x = (x+90)*(310-50)/180 + 50
+        y = (y+90)*(800-260)/180 + 260
+        z = (z+90)*(800-260)/180 + 260
         # Llama a la función goal_position para mover el servo
 
         #tercer motor
-        goal_position(3, int(x), min=0, max=341)
+        goal_position(3, int(x), min=50, max=310)
         #Cuarto motor
-        goal_position(4, int(y), min=240, max=855)
+        goal_position(4, int(y), min=260, max=800)
         #Quinto motor
-        goal_position(5, int(z), min=230, max=820)
+        goal_position(5, int(z), min=260, max=800)
 
     def listener(self):
 
@@ -35,9 +38,9 @@ class IMU():
         # anonymous=True flag means that rospy will choose a unique
         # name for our 'listener' node so that multiple listeners can
         # run simultaneously.
-        rospy.init_node('Dynamixel ', anonymous=True)
+        rospy.init_node('Dynamixel', anonymous=True)
 
-        rospy.Subscriber("gyroscope", Float64MultiArray, self.callback)
+        rospy.Subscriber("gyro", Float64MultiArray, self.callback)
 
         # spin() simply keeps python from exiting until this node is stopped
         rospy.spin()
