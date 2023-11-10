@@ -7,8 +7,8 @@ from std_msgs.msg import Float64MultiArray
 import time 
 
 # Configura la conexión serie con Arduino
-arduino_port = '/dev/ttyUSB1'  # Cambia esto al puerto correcto
-baud_rate = 115200  # Asegúrate de que coincide con la velocidad de transmisión de Arduino
+arduino_port = "/dev/ttyUSB1"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+baud_rate = 1000000 # Asegúrate de que coincide con la velocidad de transmisión de Arduino
 
 # Inicializa el nodo ROS
 rospy.init_node('gyro_publisher', anonymous=True)
