@@ -11,7 +11,6 @@ from std_msgs.msg import Float64MultiArray
 
 
 
-matriz=[[[0000,0,0],[1000,0,0],[2000,0,0],[3000,0,0],[4000,0,0],[5000,0,0],[6000,0,0]],[[0000,0,0],[1000,0,0],[2000,0,0],[3000,0,0],[4000,0,0],[5000,0,0],[6000,0,0]]]
 
 last_received_time = None
 class Master():
@@ -57,37 +56,40 @@ class Master():
         offset2= -1000-self.home[1]
 
         print(self.homie)
-        conf1= [-3000, 700, 1000, 300, 0]
-        conf2= [3000, -700, 5000, -700, 0]
-        conf3= [0, 700, 1000, 300, 0]
-        conf4= [-3000, 700, 1000, 300, 0]
-        conf5= [-3000, 700, 1000, 300, 0]
-        #m=matriz[conf1, conf2, conf3, conf4, conf5]
+        conf1= [9000-offset1, -1000-offset2, 0, 0, 0]
+        conf2= [-5000-offset1, 10000-offset2, 0, 0, 0]
+        conf3= [0-offset1, 0-offset2, 0, 0, 0]
+        conf4= [2000-offset1, 4500-offset2, 0, 0, 0]
+        conf5= [6000-offset1, 9000-offset2, 0, 0, 0]
+        m=[conf1, conf2, conf3, conf4, conf5]
         
-        goal_position(1,data.data[0] - offset1)
-        goal_position(2,data.data[1] - offset2)
-        # goal_position(3,data.data[2])
-        # goal_position(4,data.data[3])
-        # goal_position(5,data.data[4])
-        print("move motor con id 1 a : ")
-        print(data.data[0]- offset1)
-        print("move motor con id 2 a : ")
-        print(data.data[1] - offset2)
-        print("move motor con id 3 a : ")
-        print(data.data[2])
-        print("move motor con id 4 a : ")
-        print(data.data[3])
-        print("move motor con id 5 a : ")
+
+        #goal_position(1,data.data[0] - offset1)
+        #goal_position(2,data.data[1] - offset2)
+        #goal_position(3,data.data[2])
+        #goal_position(4,data.data[3])
+        #goal_position(5,data.data[4])
+        #print("move motor con id 1 a : ")
+        #print(data.data[0]- offset1)
+        #print("move motor con id 2 a : ")
+        #print(data.data[1] - offset2)
+        #print("move motor con id 3 a : ")
+        #print(data.data[2])
+        #print("move motor con id 4 a : ")
+        #print(data.data[3])
+        #print("move motor con id 5 a : ")
         # print(data.data[4])
-        # Conf = data.data[0]
-        # pos= look[Conf]
-        # for i in range(4):
-        #     goal_position(i+1, pos[i])
-        # goal_position(1,pos[0])
-        # goal_position(2,pos[1])
-        # goal_position(3,pos[2])
-        # goal_position(4,pos[3])
-        # goal_position(5,pos[4])
+        Conf = data.data[0]
+        pos= m[int(Conf)]
+        print(m)
+        for i in range(2):
+            goal_position(i+1, pos[i])
+
+        #goal_position(1,pos[0])
+        #goal_position(2,pos[1])
+        #goal_position(3,pos[2])
+        #goal_position(4,pos[3])
+        #goal_position(5,pos[4])
         
     #Función calback lectura posicion inidical
     def callback_read(self,data):

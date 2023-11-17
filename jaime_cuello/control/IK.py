@@ -21,7 +21,8 @@ while not rospy.is_shutdown():
     
 
     data = Float64MultiArray()
-    data.data = [input("motor 1 :"),input("motor 2 :"), input("motor 3 :"), input("motor 4:"),input("motor 5 :")]
+    #data.data = [input("motor 1 :"),input("motor 2 :"), input("motor 3 :"), input("motor 4:"),input("motor 5 :")]
+    data.data = [input("config:")]
     pub.publish(data)
         
         
