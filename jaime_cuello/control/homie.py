@@ -16,7 +16,6 @@ def callback_read(data):
     if home==None : 
      pos[0]=(data.dynamixel_state[0].present_position)
      pos[1]=(data.dynamixel_state[1].present_position)
-     pos[2]=(data.dynamixel_state[4].present_position)
       
      
      home=pos

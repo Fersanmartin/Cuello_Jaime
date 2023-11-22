@@ -53,14 +53,14 @@ class Master():
 
     def callback_multivuelta(self,data):
         offset1= 9000-self.home[0]
-        offset2= -1000-self.home[1]
+        offset2= 10000-self.home[1]
 
         print(self.homie)
-        conf1= [9000-offset1, -1000-offset2, 0, 0, 0]
-        conf2= [-5000-offset1, 10000-offset2, 0, 0, 0]
+        conf1= [9000-offset1, 10000-offset2, 0, 0, 0]
+        conf2= [-2000-offset1, 8000-offset2, 0, 0, 0]
         conf3= [0-offset1, 0-offset2, 0, 0, 0]
         conf4= [2000-offset1, 4500-offset2, 0, 0, 0]
-        conf5= [6000-offset1, 9000-offset2, 0, 0, 0]
+        conf5= [6000-offset1, 5000-offset2, 0, 0, 0]
         m=[conf1, conf2, conf3, conf4, conf5]
         
 
