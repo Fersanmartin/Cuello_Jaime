@@ -28,7 +28,7 @@ class Master():
 
     #Callback para arduino serial
     def callback_IMU(self, data):
-        self.x, self.y =data.data[0], data.data[1]
+        self.x, self.y =data.data[1], data.data[0]
 
 
     #Callback para tren superior
@@ -45,7 +45,7 @@ class Master():
                new_speed=(abs(new_speed/2))+ 1024 
         else:
               new_speed=(abs(new_speed/2))
-        #print(new_speed)
+        
         
 
         goal_vel(4, new_speed)
@@ -55,43 +55,24 @@ class Master():
         offset1= 9000-self.home[0]
         offset2= 10000-self.home[1]
 
-        print(self.homie)
-        conf1= [9000-offset1, 10000-offset2, 0, 0, 0]
-        conf2= [-2000-offset1, 8000-offset2, 0, 0, 0]
-        conf3= [0-offset1, 0-offset2, 0, 0, 0]
-        conf4= [2000-offset1, 4500-offset2, 0, 0, 0]
-        conf5= [6000-offset1, 5000-offset2, 0, 0, 0]
-        m=[conf1, conf2, conf3, conf4, conf5]
+        conf1= [-2000-offset1, 0-offset2, 500, 0, 0]
+        conf2= [-2000-offset1, 1000-offset2, 800, 0, 0]
+        conf3= [-2000-offset1, 3000-offset2, 1000, 0, 0]
+        conf4= [2000-offset1, 4500-offset2, 1000, 0, 0]
+        conf5= [6000-offset1, 5000-offset2, 1000, 0, 0]
+        conf6= [6000-offset1, 5000-offset2, 1000, 0, 0]
+        conf7= [6000-offset1, 5000-offset2, 1000, 0, 0]
+        conf8= [6000-offset1, 5000-offset2, 1000, 0, 0]
+        conf9= [9000-offset1, 10000-offset2, 1000, 0, 0]
+        m=[[conf1, conf2, conf3],[conf4, conf5,conf6],[conf7, conf8,conf9]]
         
-
-        #goal_position(1,data.data[0] - offset1)
-        #goal_position(2,data.data[1] - offset2)
-        #goal_position(3,data.data[2])
-        #goal_position(4,data.data[3])
-        #goal_position(5,data.data[4])
-        #print("move motor con id 1 a : ")
-        #print(data.data[0]- offset1)
-        #print("move motor con id 2 a : ")
-        #print(data.data[1] - offset2)
-        #print("move motor con id 3 a : ")
-        #print(data.data[2])
-        #print("move motor con id 4 a : ")
-        #print(data.data[3])
-        #print("move motor con id 5 a : ")
-        # print(data.data[4])
-        Conf = data.data[0]
-        pos= m[int(Conf)]
-        print(m)
-        for i in range(2):
+        x,y = int(data.data[0]),int(data.data[1])
+        pos=m[x][y]
+        for i in range(3):
             goal_position(i+1, pos[i])
 
-        #goal_position(1,pos[0])
-        #goal_position(2,pos[1])
-        #goal_position(3,pos[2])
-        #goal_position(4,pos[3])
-        #goal_position(5,pos[4])
         
-    #Función calback lectura posicion inidical
+    #Función calback lectura posicion 
     def callback_read(self,data):
         
         self.pos[0]=(data.dynamixel_state[0].present_position)
@@ -107,20 +88,19 @@ class Master():
         print("offset is : ")
         print(9000-self.home[0])
         print(-1000-self.home[1])
-        
-
-
+        goal_position(3,1000)
+        goal_vel(3,200)
     def Main(self):
 
         #Se inicia nodo 
         rospy.init_node('Dynamixel', anonymous=True)
 
         rospy.Subscriber("homie_node", Float64MultiArray, self.homie)
-            
+        
 
         #rospy.Subscriber("gyro", Float64MultiArray, self.callback_IMU)
         
-        #rospy.Subscriber("/dynamixel_workbench/dynamixel_state", DynamixelStateList, self.callback_vel)
+        #rospy.Subscriber("/dynamixel_workbench/dynamixel_state", DynamixelStateList, self.callback_read)
         
         rospy.Subscriber("IK_node", Float64MultiArray, self.callback_multivuelta)
         
